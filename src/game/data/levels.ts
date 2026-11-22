@@ -38,7 +38,7 @@ const STAGE_NAMES = [
 const BOSS_BY_LEVEL: Record<number, string> = { 3: 'blandJudge', 6: 'pickyGourmet', 9: 'foodGod' };
 
 /** 9 关的基础目标（Boss 关还会乘上 Boss 的 targetMult） */
-const BASE_TARGETS = [300, 800, 2000, 5000, 12000, 30000, 75000, 180000, 400000];
+const BASE_TARGETS = [600, 1500, 3000, 6000, 13000, 30000, 75000, 180000, 400000];
 
 export const FINAL_LEVEL = 9;
 
