@@ -1,0 +1,421 @@
+{
+ "styles": {
+  "base": "2D cartoon animation style illustration, like a modern hand-drawn animated TV series: bold clean dark-brown outlines, flat cel shading with one soft shadow tone, bright warm saturated colors, small glossy highlights, cute and slightly absurd. ",
+  "isolated": "Single subject centered and fully visible, filling about 80% of the frame, nothing cut off. Fully transparent background, no ground shadow, no frame, no border, no panels. Absolutely no text, letters, numbers or watermark.",
+  "ingredient": "A cute food mascot: {desc}. It has a small simple kawaii face (two shiny dot eyes, tiny {mood} mouth, light blush). No arms, no legs. ",
+  "tool": "A collectible magical kitchen item, drawn like a treasured game relic: {desc}. No face on the object. ",
+  "dish": "A finished Chinese-style dish, appetizing, three-quarter top view, wisps of steam: {desc}. No face, no chopsticks hand, no people. ",
+  "boss": "Bust portrait (head and shoulders, facing slightly left) of a funny cartoon character: {desc}. Expressive animated-series character design. ",
+  "item": "A game item icon: {desc}. No face. ",
+  "character": "A funny cartoon character, full body: {desc}. Expressive animated-series character design. "
+ },
+ "items": [
+  {
+   "out": "ingredients/beef",
+   "style": "ingredient",
+   "desc": "a thick raw marbled beef steak",
+   "mood": "proud smirking"
+  },
+  {
+   "out": "ingredients/pork",
+   "style": "ingredient",
+   "desc": "a slice of pork belly with clear layers of pink lean and white fat",
+   "mood": "happy open"
+  },
+  {
+   "out": "ingredients/chicken",
+   "style": "ingredient",
+   "desc": "a plump raw chicken drumstick",
+   "mood": "surprised round"
+  },
+  {
+   "out": "ingredients/lamb",
+   "style": "ingredient",
+   "desc": "a lamb chop on a white bone",
+   "mood": "sleepy content"
+  },
+  {
+   "out": "ingredients/fish",
+   "style": "ingredient",
+   "desc": "a whole silver-blue fish curved in a splash",
+   "mood": "puckered"
+  },
+  {
+   "out": "ingredients/shrimp",
+   "style": "ingredient",
+   "desc": "a curled pink-orange shrimp with long antennae",
+   "mood": "cheerful"
+  },
+  {
+   "out": "ingredients/crab",
+   "style": "ingredient",
+   "desc": "a red crab with big raised claws",
+   "mood": "grumpy determined"
+  },
+  {
+   "out": "ingredients/squid",
+   "style": "ingredient",
+   "desc": "a pale pink squid with curly tentacles",
+   "mood": "wobbly nervous"
+  },
+  {
+   "out": "ingredients/tomato",
+   "style": "ingredient",
+   "desc": "a round glossy red tomato with green leafy stem",
+   "mood": "big happy"
+  },
+  {
+   "out": "ingredients/potato",
+   "style": "ingredient",
+   "desc": "a lumpy brown potato with little sprout",
+   "mood": "dopey smiling"
+  },
+  {
+   "out": "ingredients/cabbage",
+   "style": "ingredient",
+   "desc": "a Chinese napa cabbage, pale green leaves and white stalk, standing upright",
+   "mood": "calm gentle"
+  },
+  {
+   "out": "ingredients/eggplant",
+   "style": "ingredient",
+   "desc": "a shiny purple eggplant with green cap",
+   "mood": "shy wavy"
+  },
+  {
+   "out": "ingredients/greenpepper",
+   "style": "ingredient",
+   "desc": "a bright green bell pepper",
+   "mood": "cool confident"
+  },
+  {
+   "out": "ingredients/cucumber",
+   "style": "ingredient",
+   "desc": "a fresh bumpy green cucumber with a little yellow flower",
+   "mood": "refreshing grin"
+  },
+  {
+   "out": "ingredients/shiitake",
+   "style": "ingredient",
+   "desc": "a shiitake mushroom with brown cracked cap",
+   "mood": "wise little"
+  },
+  {
+   "out": "ingredients/enoki",
+   "style": "ingredient",
+   "desc": "a tied bunch of long thin white enoki mushrooms (face on the bundle)",
+   "mood": "giggling"
+  },
+  {
+   "out": "ingredients/woodear",
+   "style": "ingredient",
+   "desc": "a black wood ear fungus with ruffled glossy edges",
+   "mood": "mysterious little"
+  },
+  {
+   "out": "ingredients/chili",
+   "style": "ingredient",
+   "desc": "a fiery red chili pepper with small flames dancing around it",
+   "mood": "screaming hot open"
+  },
+  {
+   "out": "ingredients/sichuanpepper",
+   "style": "ingredient",
+   "desc": "a cluster of small red Sichuan peppercorns on a twig with tiny electric sparkles (face on the biggest peppercorn)",
+   "mood": "tingly wobbly"
+  },
+  {
+   "out": "ingredients/ginger",
+   "style": "ingredient",
+   "desc": "a knobbly ginger root",
+   "mood": "spunky"
+  },
+  {
+   "out": "ingredients/garlic",
+   "style": "ingredient",
+   "desc": "a white garlic bulb with purple streaks",
+   "mood": "smug"
+  },
+  {
+   "out": "ingredients/rice",
+   "style": "ingredient",
+   "desc": "a blue-and-white porcelain bowl heaped with fluffy white rice (face on the rice mound)",
+   "mood": "content"
+  },
+  {
+   "out": "ingredients/noodles",
+   "style": "ingredient",
+   "desc": "a swirly nest of fresh yellow wheat noodles",
+   "mood": "slurping"
+  },
+  {
+   "out": "ingredients/flour",
+   "style": "ingredient",
+   "desc": "a small tied cloth sack of white flour with a puff of flour dust",
+   "mood": "sneezing"
+  },
+  {
+   "out": "ingredients/egg",
+   "style": "ingredient",
+   "desc": "a smooth brown chicken egg",
+   "mood": "innocent"
+  },
+  {
+   "out": "ingredients/redbroth",
+   "style": "ingredient",
+   "desc": "a small clay pot brimming with bubbling red chili-oil hotpot broth, floating chilies (face on the pot)",
+   "mood": "fierce grinning"
+  },
+  {
+   "out": "ingredients/mushbroth",
+   "style": "ingredient",
+   "desc": "a small clay pot of clear golden mushroom broth with mushroom slices floating (face on the pot)",
+   "mood": "soothing smile"
+  },
+  {
+   "out": "ingredients/truffle",
+   "style": "ingredient",
+   "desc": "a black truffle with gold sparkles around it",
+   "mood": "elegant"
+  },
+  {
+   "out": "ingredients/caviar",
+   "style": "ingredient",
+   "desc": "a small open round tin of glistening black caviar with a tiny gold spoon (face on the tin)",
+   "mood": "posh"
+  },
+  {
+   "out": "ingredients/mystery",
+   "style": "ingredient",
+   "desc": "a glowing purple mushroom with neon green spots and swirly magical sparkles",
+   "mood": "dizzy swirly-eyed"
+  },
+  {
+   "out": "tools/heirloomWok",
+   "style": "tool",
+   "desc": "a heavy old black cast-iron wok with a worn wooden handle, battle scratches, faint golden glow of heritage"
+  },
+  {
+   "out": "tools/hellOil",
+   "style": "tool",
+   "desc": "a glass jar of glowing red chili oil, flames curling out, the lid shaped like little devil horns"
+  },
+  {
+   "out": "tools/goldenSpatula",
+   "style": "tool",
+   "desc": "a shining solid-gold wok spatula with sparkles and light rays"
+  },
+  {
+   "out": "tools/darkCookbook",
+   "style": "tool",
+   "desc": "a mysterious thick dark purple cookbook with a skull-and-fork emblem, purple smoke leaking from the pages"
+  },
+  {
+   "out": "tools/centuryBroth",
+   "style": "tool",
+   "desc": "an ancient cracked clay stockpot of rich brown broth with steam, rope-tied wooden lid tilted open"
+  },
+  {
+   "out": "tools/molecular",
+   "style": "tool",
+   "desc": "a retro-futuristic molecular gastronomy machine with glass tubes, a spinning orb and bubbling colorful liquids"
+  },
+  {
+   "out": "tools/autoWok",
+   "style": "tool",
+   "desc": "a small cute robotic wok on wheels with two mechanical arms and a blinking blue light"
+  },
+  {
+   "out": "tools/michelin",
+   "style": "tool",
+   "desc": "a golden star-shaped medal with three small stars engraved, on a red ribbon, glowing"
+  },
+  {
+   "out": "tools/knife",
+   "style": "tool",
+   "desc": "a big Chinese cleaver with a gleaming steel blade and wooden handle, a gleam of light on the edge"
+  },
+  {
+   "out": "tools/board",
+   "style": "tool",
+   "desc": "a thick round wooden chopping board with growth rings, seen at an angle"
+  },
+  {
+   "out": "tools/steamer",
+   "style": "tool",
+   "desc": "a two-tier bamboo steamer with lid, soft steam rising"
+  },
+  {
+   "out": "tools/ladle",
+   "style": "tool",
+   "desc": "a big copper soup ladle whose bowl is shaped like a star, with a drip of golden soup"
+  },
+  {
+   "out": "tools/timer",
+   "style": "tool",
+   "desc": "a copper-framed hourglass kitchen timer with glowing orange sand"
+  },
+  {
+   "out": "tools/wokToss",
+   "style": "tool",
+   "desc": "an old martial-arts secret scroll half unrolled, tied with a red ribbon, with a swirl of fire and a flying wok drawn on it in ink (no readable writing)"
+  },
+  {
+   "out": "tools/luckyCat",
+   "style": "tool",
+   "desc": "a golden lucky cat figurine raising one paw, holding a gold coin, wearing a tiny chef hat (the cat figurine may have its painted face)"
+  },
+  {
+   "out": "tools/pickleJar",
+   "style": "tool",
+   "desc": "a traditional brown glazed ceramic pickle jar with a water-sealed lid, colorful pickled vegetables visible through a window"
+  },
+  {
+   "out": "tools/fridge",
+   "style": "tool",
+   "desc": "a small rounded retro mint-green refrigerator, door slightly open with cold blue mist"
+  },
+  {
+   "out": "tools/grill",
+   "style": "tool",
+   "desc": "a small charcoal barbecue grill with glowing orange coals and two meat skewers on top"
+  },
+  {
+   "out": "tools/malaChain",
+   "style": "tool",
+   "desc": "a necklace-like chain made of red chili peppers and red peppercorns linked together, crackling with electric sparks"
+  },
+  {
+   "out": "tools/twiceCooked",
+   "style": "tool",
+   "desc": "a wok surrounded by a glowing circular arrow made of fire, suggesting cooking again and again"
+  },
+  {
+   "out": "tools/mitts",
+   "style": "tool",
+   "desc": "a pair of thick quilted red-and-cream oven mitts"
+  },
+  {
+   "out": "tools/prepStation",
+   "style": "tool",
+   "desc": "a cute three-tier wooden kitchen prep cart with small bowls of chopped ingredients on each shelf"
+  },
+  {
+   "out": "tools/msg",
+   "style": "tool",
+   "desc": "a small glass shaker full of sparkling white umami seasoning crystals, with crystal sparkles bursting out"
+  },
+  {
+   "out": "dishes/luandun",
+   "style": "dish",
+   "desc": "a rustic clay bowl of hearty mixed stew with random chunks of vegetables and meat"
+  },
+  {
+   "out": "dishes/liangban",
+   "style": "dish",
+   "desc": "a plate of cold smashed cucumber and vegetable salad with chili oil drizzle and sesame"
+  },
+  {
+   "out": "dishes/eggrice",
+   "style": "dish",
+   "desc": "a plate of golden egg fried rice with scallions"
+  },
+  {
+   "out": "dishes/tomatoegg",
+   "style": "dish",
+   "desc": "a plate of bright tomato and scrambled egg stir-fry"
+  },
+  {
+   "out": "dishes/hunsu",
+   "style": "dish",
+   "desc": "a plate of sliced meat stir-fried with green vegetables"
+  },
+  {
+   "out": "dishes/jiachang",
+   "style": "dish",
+   "desc": "a home-style stir fry of pork slices, green peppers and garlic in a shiny sauce"
+  },
+  {
+   "out": "dishes/seafood",
+   "style": "dish",
+   "desc": "a big platter of steamed shrimp, red crab and squid rings with lemon-free garnish of herbs"
+  },
+  {
+   "out": "dishes/bbq",
+   "style": "dish",
+   "desc": "a platter of sizzling grilled meat skewers sprinkled with spice"
+  },
+  {
+   "out": "dishes/mala",
+   "style": "dish",
+   "desc": "a bowl of fiery Sichuan mala dish, swimming in red chili oil with dried chilies and peppercorns"
+  },
+  {
+   "out": "dishes/hotpot",
+   "style": "dish",
+   "desc": "a deluxe hotpot with a yin-yang divided pot of red spicy and golden mushroom broth boiling, plates of ingredients around"
+  },
+  {
+   "out": "dishes/dark",
+   "style": "dish",
+   "desc": "a bizarre comedic dark cuisine: a plate of glowing purple goo with a fish tail, a mushroom and an egg sticking out, ominous purple smoke"
+  },
+  {
+   "out": "bosses/blandJudge",
+   "style": "boss",
+   "desc": "an elderly serene food critic with a long thin white mustache, pale beige robes, holding a cup of plain hot water, one eyebrow raised in disapproval, sweat drop"
+  },
+  {
+   "out": "bosses/pickyGourmet",
+   "style": "boss",
+   "desc": "a snobby plump gourmet with a monocle, curled black mustache, napkin tucked into his collar, holding up a fork and squinting critically"
+  },
+  {
+   "out": "bosses/foodGod",
+   "style": "boss",
+   "desc": "a majestic divine chef god with a flowing white beard, a tall golden chef hat with a glowing halo, holding a golden ladle like a scepter, sitting among clouds, powerful golden aura"
+  },
+  {
+   "out": "items/recipeScroll",
+   "style": "item",
+   "desc": "a rolled-up ancient recipe scroll with a red wax seal and a little glowing up arrow of light"
+  },
+  {
+   "out": "items/enhanceJar",
+   "style": "item",
+   "desc": "a small round jar of magic seasoning glowing with rainbow sparkles"
+  },
+  {
+   "out": "items/ingredientBasket",
+   "style": "item",
+   "desc": "a woven wicker basket overflowing with fresh vegetables, a fish and a mushroom"
+  },
+  {
+   "out": "items/compostBin",
+   "style": "item",
+   "desc": "a cute green kitchen compost bin with the lid popping open"
+  },
+  {
+   "out": "items/starPowder",
+   "style": "item",
+   "desc": "a small pouch spilling golden star-shaped glitter powder"
+  },
+  {
+   "out": "scene/wok",
+   "style": "tool",
+   "desc": "a big empty black wok viewed from slightly above, sitting on a ring of blue-orange gas flames, glossy oiled interior"
+  },
+  {
+   "out": "scene/mascot",
+   "style": "character",
+   "desc": "a chubby cheerful little kitchen god mascot with round rosy cheeks, tall white chef hat with a golden star, red-and-gold robe, floating on a small cloud, holding a wok spatula high, full body"
+  },
+  {
+   "out": "scene/kitchen",
+   "style": "scene",
+   "size": "1536x1024",
+   "opaque": true,
+   "desc": "Wide background painting for a cooking game, cartoon animation background art style with soft painterly shading: a cozy warm Chinese home kitchen at evening, tiled stove counter in the center, hanging lanterns, shelves of jars and hanging garlic and chili strings, warm golden light, steam. Leave the center lower area simple and uncluttered. No characters, no text, no letters, no watermark."
+  }
+ ]
+}

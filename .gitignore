@@ -1,0 +1,6 @@
+node_modules
+dist
+scripts/art/raw/**/*.png
+scripts/art/gen.log
+*.tsbuildinfo
+.DS_Store
