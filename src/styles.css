@@ -1913,7 +1913,13 @@ img {
   }
   .tb-level {
     min-width: 0;
-    flex: 1;
+    flex: 1 1 0;
+  }
+  .tb-chapter,
+  .tb-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .tb-name {
     font-size: 15px;

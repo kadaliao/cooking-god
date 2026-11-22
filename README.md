@@ -1,16 +1,41 @@
-# 料理之神 Cooking God
+<p align="center">
+  <img src="public/art/scene/mascot.webp" width="160" alt="料理之神吉祥物" />
+</p>
 
-一款单人 Roguelike 卡牌构筑网页游戏：**抽食材 → 排顺序 → 做料理 → 厨具连锁 → 倍率爆炸**。
+<h1 align="center">料理之神 Cooking God</h1>
 
-纯前端、完全本地运行，进度自动存在浏览器 localStorage 里。
+<p align="center">
+  <b>挑食材、排好下锅顺序、让厨具连锁乘算——把一盘家常小炒炒到几百万分的 Roguelike 卡牌构筑网页游戏。</b>
+</p>
 
-![title](public/art/scene/mascot.webp)
+<p align="center">
+  <a href="https://cooking-god.vercel.app"><b>▶ 在线试玩：cooking-god.vercel.app</b></a>
+  <br />
+  <sub>无需安装，电脑和手机浏览器都能玩，进度自动保存在本地</sub>
+</p>
+
+![结算演出：一锅烧烤拼盘打出 2,606,912 分](docs/screenshots/final.webp)
+
+## 截图
+
+| 选食材、排顺序，右侧实时预览配方、技法和预估得分 | 结算逐步演出：每一次加筹码、加倍率、×2 都看得见 |
+|---|---|
+| ![对局](docs/screenshots/gameplay.webp) | ![结算](docs/screenshots/scoring.webp) |
+| **商店：厨具、配方秘籍、稀有食材** | **Boss 规则在开打前讲清楚** |
+| ![商店](docs/screenshots/shop.webp) | ![Boss](docs/screenshots/boss.webp) |
+
+<p align="center">
+  <img src="docs/screenshots/title.webp" width="62%" alt="标题画面" />
+  <img src="docs/screenshots/mobile.webp" width="22%" alt="手机版" />
+</p>
+
+一局 9 关，每关 4 次烹饪：**抽食材 → 排顺序 → 做料理 → 厨具连锁 → 倍率爆炸**。纯前端，美术全部为项目原创生成的卡通插画。
 
 ## 快速开始
 
 ```bash
 pnpm install
-pnpm dev          # 开发服务器 http://localhost:5173
+pnpm dev          # 本地开发服务器 http://localhost:5173（线上版：https://cooking-god.vercel.app）
 pnpm test         # 单元测试（计分、Boss、商店、存档、胜负路线、防死循环）
 pnpm build        # 类型检查 + 生产构建，产物在 dist/（相对路径，可直接丢到任意静态服务器）
 pnpm preview      # 预览生产构建
@@ -20,6 +45,12 @@ pnpm preview      # 预览生产构建
 
 ```bash
 SIM_N=30 pnpm vitest run scripts/sim.test.ts --silent=false --reporter=verbose
+```
+
+重新生成 README 截图（需要本机的 Google Chrome 和 cwebp，先 `pnpm dev`）：
+
+```bash
+node scripts/screenshots.mjs http://localhost:5173/
 ```
 
 ## 玩法
