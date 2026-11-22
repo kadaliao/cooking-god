@@ -4,3 +4,4 @@ scripts/art/raw/**/*.png
 scripts/art/gen.log
 *.tsbuildinfo
 .DS_Store
+.vercel
