@@ -69,7 +69,7 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
           下次进入对局时重看
         </button>
       </div>
-      {run && (
+      {run && !IS_MINITOOL && (
         <div className="setting-row">
           <span className="muted small">本局种子：{run.seed}</span>
         </div>

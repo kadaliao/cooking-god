@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
-import { canShare, shareCard } from '../platform/xhs';
+import { canShare, IS_MINITOOL, shareCard } from '../platform/xhs';
 import { burst } from '../animations/fx';
 import { BOSSES } from '../game/data/bosses';
 import { levelInfo } from '../game/data/levels';
@@ -137,14 +137,17 @@ function Stats({ run }: { run: RunState }) {
         <span>赚取金币</span>
         <b>${run.stats.goldEarned}</b>
       </div>
-      <div>
+      {/* 小工具版不显示种子（普通玩家看不懂），用时占满一行 */}
+      <div style={IS_MINITOOL ? { gridColumn: '1 / -1' } : undefined}>
         <span>用时</span>
         <b>{minutes} 分钟</b>
       </div>
-      <div>
-        <span>种子</span>
-        <b className="mono">{run.seed}</b>
-      </div>
+      {!IS_MINITOOL && (
+        <div>
+          <span>种子</span>
+          <b className="mono">{run.seed}</b>
+        </div>
+      )}
       <div className="stats-tools">
         {run.tools.map((t) => (
           <img key={t.uid} src={toolArt(t.defId)} alt={TOOLS[t.defId].name} title={TOOLS[t.defId].name} />
@@ -199,9 +202,11 @@ export function GameOver() {
         <button className="btn btn-primary big" onClick={() => newRun()} autoFocus>
           再来一局
         </button>
-        <button className="btn" onClick={() => newRun(run.seed)}>
-          同种子重开
-        </button>
+        {!IS_MINITOOL && (
+          <button className="btn" onClick={() => newRun(run.seed)}>
+            同种子重开
+          </button>
+        )}
         <ShareButton />
         <button className="btn btn-ghost" onClick={abandon}>
           回到标题

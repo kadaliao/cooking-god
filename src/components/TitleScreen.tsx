@@ -6,6 +6,7 @@ import { format } from '../game/scoring/bignum';
 import { useGame } from '../game/state/store';
 import { art, ingredientArt } from './art';
 import { SAVE_STATUS_TEXT } from '../platform/storage';
+import { IS_MINITOOL } from '../platform/xhs';
 
 export function TitleScreen() {
   const run = useGame((s) => s.run);
@@ -63,7 +64,8 @@ export function TitleScreen() {
         <button className={`btn ${canContinue ? '' : 'btn-primary'} big`} onClick={() => newRun()}>
           新的一局
         </button>
-        {showSeed ? (
+        {/* 指定种子开局只在网页版提供；小工具面向普通玩家，不露出这个概念 */}
+        {IS_MINITOOL ? null : showSeed ? (
           <form
             className="seed-form"
             onSubmit={(e) => {
