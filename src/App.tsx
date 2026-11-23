@@ -13,6 +13,8 @@ import { TitleScreen } from './components/TitleScreen';
 import { TooltipLayer, useTipStore } from './components/Tooltip';
 import { Tutorial } from './components/Tutorial';
 import { art, dishArt, ingredientArt, preloadArt, toolArt } from './components/art';
+import { keepScreenOn } from './platform/xhs';
+import { SAVE_STATUS_TEXT } from './platform/storage';
 
 export default function App() {
   const screen = useGame((s) => s.screen);
@@ -22,6 +24,7 @@ export default function App() {
   const anim = useGame((s) => s.anim);
   const tutorialDone = useGame((s) => s.settings.tutorialDone);
   const toast = useGame((s) => s.toast);
+  const saveStatus = useGame((s) => s.saveStatus);
   const canvas = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -34,6 +37,19 @@ export default function App() {
       art('scene/kitchen'),
     ]);
   }, []);
+
+  // 对局中保持屏幕常亮（小工具客户端 9.55+），回到标题时撤销
+  useEffect(() => keepScreenOn(screen === 'game'), [screen]);
+  useEffect(() => {
+    const onVis = () => keepScreenOn(document.visibilityState === 'visible' && useGame.getState().screen === 'game');
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, []);
+
+  // 存档写入失败时提示一次（不支持 / 读失败的提示在标题页常驻）
+  useEffect(() => {
+    if (saveStatus === 'writeError' || saveStatus === 'tooLarge') useGame.getState().showToast(SAVE_STATUS_TEXT[saveStatus]);
+  }, [saveStatus]);
 
   // 切换界面时收起悬浮提示
   useEffect(() => useTipStore.getState().hide(), [screen, modal, run?.phase]);
@@ -59,9 +75,11 @@ export default function App() {
       <TooltipLayer />
       <AnimatePresence>
         {toast && (
-          <motion.div key={toast.id} className="toast" initial={{ y: -40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -40, opacity: 0 }}>
-            {toast.text}
-          </motion.div>
+          <div key={toast.id} className="toast-pos">
+            <motion.div className="toast" role="status" initial={{ y: -40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -40, opacity: 0 }}>
+              {toast.text}
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
       <canvas ref={canvas} className="fx-canvas" aria-hidden />

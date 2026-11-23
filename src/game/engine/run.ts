@@ -11,7 +11,9 @@ import { generateShop } from './shop';
 
 export class GameError extends Error {}
 
-export const clone = <T>(v: T): T => structuredClone(v);
+// 存档本来就要能 JSON 序列化，所以没有 structuredClone 的旧内核（Chrome < 98）用 JSON 深拷贝即可
+export const clone = <T>(v: T): T =>
+  typeof structuredClone === 'function' ? structuredClone(v) : (JSON.parse(JSON.stringify(v)) as T);
 
 export function newUid(s: RunState, prefix: string) {
   return `${prefix}${s.nextUid++}`;

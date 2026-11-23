@@ -46,15 +46,16 @@ export function ToolRail({ onToolClick }: { onToolClick?: (uid: string) => void 
               />
               <AnimatePresence>
                 {activeUid === t.uid && ev && (
-                  <motion.div
-                    key={anim!.cursor}
-                    className={`float-label tool-label kind-${ev.kind}`}
-                    initial={{ opacity: 0, x: -10, scale: 0.6 }}
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    {ev.text}
-                  </motion.div>
+                  <div key={anim!.cursor} className="float-pos tool-pos">
+                    <motion.div
+                      className={`float-label tool-label kind-${ev.kind}`}
+                      initial={{ opacity: 0, x: mobile ? 0 : -10, y: mobile ? 6 : 0, scale: 0.6 }}
+                      animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      {ev.text}
+                    </motion.div>
+                  </div>
                 )}
               </AnimatePresence>
             </Reorder.Item>

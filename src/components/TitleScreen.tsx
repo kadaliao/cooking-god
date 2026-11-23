@@ -5,6 +5,7 @@ import { levelInfo } from '../game/data/levels';
 import { format } from '../game/scoring/bignum';
 import { useGame } from '../game/state/store';
 import { art, ingredientArt } from './art';
+import { SAVE_STATUS_TEXT } from '../platform/storage';
 
 export function TitleScreen() {
   const run = useGame((s) => s.run);
@@ -12,6 +13,7 @@ export function TitleScreen() {
   const newRun = useGame((s) => s.newRun);
   const cont = useGame((s) => s.continueRun);
   const setModal = useGame((s) => s.setModal);
+  const saveStatus = useGame((s) => s.saveStatus);
   const [seed, setSeed] = useState('');
   const [showSeed, setShowSeed] = useState(false);
   const canContinue = run && run.phase !== 'gameOver';
@@ -88,6 +90,11 @@ export function TitleScreen() {
           </button>
         </div>
       </div>
+      {(saveStatus === 'unsupported' || saveStatus === 'readError') && (
+        <div className="save-notice" role="status">
+          {SAVE_STATUS_TEXT[saveStatus]}
+        </div>
+      )}
       {records.runs > 0 && (
         <div className="records">
           已开局 {records.runs} 次 · 通关 {records.wins} 次 · 最远第 {records.bestLevel} 关 · 最高单锅 {format(records.bestCook)}

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:minitool": "tsc -b && vite build --config vite.minitool.config.ts && node scripts/minitool/pack.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",

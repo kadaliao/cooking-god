@@ -20,7 +20,7 @@ const STEPS = [
   {
     anchor: 'tools',
     title: '⑤ 厨具是关键',
-    text: '过关后去商店买厨具。它们会在烹饪时自动触发，产生 ×2、×3 的连锁乘算，并且按从上到下的顺序触发。祝你爆分！',
+    text: '过关后去商店买厨具。它们会在烹饪时自动触发，产生 ×2、×3 的连锁乘算，并且按排列顺序依次触发。祝你爆分！',
   },
 ];
 
@@ -42,30 +42,24 @@ export function Tutorial() {
   };
   const pad = 8;
   const tipBelow = rect ? rect.top < window.innerHeight / 2 : false;
-  return (
-    <div className="tutorial">
-      {rect ? (
-        <div
-          className="tut-hole"
-          style={{ left: rect.left - pad, top: rect.top - pad, width: rect.width + pad * 2, height: rect.height + pad * 2 }}
-        />
-      ) : (
-        <div className="tut-dim" />
-      )}
-      <motion.div
-        key={i}
-        className="tut-box"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        style={
-          rect
-            ? {
-                left: Math.max(12, Math.min(window.innerWidth - 352, rect.left + rect.width / 2 - 170)),
-                top: tipBelow ? Math.min(window.innerHeight - 220, rect.bottom + 16) : Math.max(12, rect.top - 200),
-              }
-            : { left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
-        }
-      >
+  // 气泡宽 340，窄屏时缩到屏宽 - 24
+  const boxW = Math.min(340, window.innerWidth - 24);
+  const box = (
+    <motion.div
+      key={i}
+      className="tut-box"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      style={
+        rect
+          ? {
+              position: 'absolute',
+              left: Math.max(12, Math.min(window.innerWidth - boxW - 12, rect.left + rect.width / 2 - boxW / 2)),
+              top: tipBelow ? Math.min(window.innerHeight - 220, rect.bottom + 16) : Math.max(12, rect.top - 200),
+            }
+          : undefined
+      }
+    >
         {!rect && <img className="tut-mascot" src={art('scene/mascot')} alt="" />}
         <div className="tut-title">{step.title}</div>
         <div className="tut-text">{step.text}</div>
@@ -80,7 +74,20 @@ export function Tutorial() {
             {i < STEPS.length - 1 ? '下一步' : '开始做饭！'}
           </button>
         </div>
-      </motion.div>
+    </motion.div>
+  );
+  return (
+    <div className="tutorial">
+      {rect ? (
+        <div
+          className="tut-hole"
+          style={{ left: rect.left - pad, top: rect.top - pad, width: rect.width + pad * 2, height: rect.height + pad * 2 }}
+        />
+      ) : (
+        <div className="tut-dim" />
+      )}
+      {/* 居中的那一步不能用 transform 居中：motion 的 y 动画会覆盖 transform，气泡会跑出屏幕 */}
+      {rect ? box : <div className="tut-center">{box}</div>}
     </div>
   );
 }

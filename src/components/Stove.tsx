@@ -107,16 +107,17 @@ export function Stove() {
               </div>
               <AnimatePresence>
                 {showLabel && (
-                  <motion.div
-                    key={anim!.cursor}
-                    className={`float-label kind-${ev!.kind}`}
-                    initial={{ opacity: 0, y: 10, scale: 0.5 }}
-                    animate={{ opacity: 1, y: -6, scale: ev!.kind === 'xmult' ? 1.25 : 1 }}
-                    exit={{ opacity: 0, y: -24 }}
-                    transition={{ type: 'spring', stiffness: 600, damping: 20 }}
-                  >
-                    {ev!.text}
-                  </motion.div>
+                  <div key={anim!.cursor} className="float-pos">
+                    <motion.div
+                      className={`float-label kind-${ev!.kind}`}
+                      initial={{ opacity: 0, y: 10, scale: 0.5 }}
+                      animate={{ opacity: 1, y: -6, scale: ev!.kind === 'xmult' ? 1.25 : 1 }}
+                      exit={{ opacity: 0, y: -24 }}
+                      transition={{ type: 'spring', stiffness: 600, damping: 20 }}
+                    >
+                      {ev!.text}
+                    </motion.div>
+                  </div>
                 )}
               </AnimatePresence>
             </Reorder.Item>
@@ -134,17 +135,19 @@ export function Stove() {
 
       <AnimatePresence>
         {isFinal && finalScore && (
-          <motion.div
-            className={`final-pop ${tier?.cls ?? ''}`}
-            data-fx="final"
-            initial={{ scale: 0.2, opacity: 0, rotate: -8 }}
-            animate={{ scale: 1, opacity: 1, rotate: 0 }}
-            exit={{ opacity: 0, scale: 1.4 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 14 }}
-          >
-            {tier && <div className="final-tier">{tier.text}</div>}
-            <div className="final-score">+{format(finalScore)}</div>
-          </motion.div>
+          <div key="final" className="final-pos">
+            <motion.div
+              className={`final-pop ${tier?.cls ?? ''}`}
+              data-fx="final"
+              initial={{ scale: 0.2, opacity: 0, rotate: -8 }}
+              animate={{ scale: 1, opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, scale: 1.4 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 14 }}
+            >
+              {tier && <div className="final-tier">{tier.text}</div>}
+              <div className="final-score">+{format(finalScore)}</div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </section>

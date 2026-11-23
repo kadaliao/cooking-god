@@ -1,0 +1,9 @@
+/* 小工具包用的字体：只含游戏里出现过的字（scripts/minitool/subset-font.py 生成）。
+   没收录的字会落到系统字体，不会显示成方块。 */
+@font-face {
+  font-family: 'ZCOOL KuaiLe';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/zcool-kuaile-subset.woff2') format('woff2');
+}

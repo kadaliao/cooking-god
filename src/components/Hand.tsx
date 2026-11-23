@@ -3,7 +3,7 @@ import { cardByUid, clearPot, discard as discardAction, sortHand, togglePot } fr
 import { useGame } from '../game/state/store';
 import { sfx } from '../audio/sfx';
 import { IngredientCard } from './IngredientCard';
-import { useIsMobile } from './hooks';
+import { useIsMobile, useViewportWidth } from './hooks';
 
 export function Hand() {
   const run = useGame((s) => s.run)!;
@@ -12,6 +12,11 @@ export function Hand() {
   const mobile = useIsMobile();
   const cards = run.hand.filter((u) => !run.pot.includes(u)).map((u) => cardByUid(run, u));
   const n = cards.length;
+  // 手机上 8 张牌一行放不下：按屏宽算叠放量，让所有牌都露出一截可以点，不用横向滑动
+  const vw = useViewportWidth();
+  const CARD_W = 72;
+  const GAP = 3;
+  const overlap = mobile && n > 1 ? Math.max(0, (n * CARD_W + (n - 1) * GAP - (vw - 16)) / (n - 1)) : 0;
 
   return (
     <section className={`hand ${anim ? 'locked' : ''}`} data-tut="hand">
@@ -26,6 +31,7 @@ export function Hand() {
                 key={c.uid}
                 layoutId={`card-${c.uid}`}
                 className="hand-slot"
+                style={overlap && i > 0 ? { marginLeft: -overlap } : undefined}
                 initial={{ opacity: 0, y: 80, rotate: 0 }}
                 animate={{ opacity: 1, y: lift, rotate: rot }}
                 exit={{ opacity: 0, y: 60 }}

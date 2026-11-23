@@ -53,6 +53,27 @@ SIM_N=30 pnpm vitest run scripts/sim.test.ts --silent=false --reporter=verbose
 node scripts/screenshots.mjs http://localhost:5173/
 ```
 
+## 小红书小工具版
+
+同一套源码还能打包成小红书小工具（离线 H5 zip）：
+
+```bash
+pnpm build:minitool   # 类型检查 + 小工具构建 + 规范检查 + 打包
+                      # 产物：minitool-release/cooking-god-minitool-<版本>.zip
+node scripts/minitool/shots.mjs 390x844          # 手机尺寸冒烟截图（模拟容器 API），输出到 minitool-release/shots
+LEGACY=1 node scripts/minitool/shots.mjs 390x844 # 去掉 Chrome 61 没有的 API 再跑一遍
+```
+
+和网页版的区别（`vite.minitool.config.ts`、`src/platform/`、`scripts/minitool/`）：
+
+- **产物形态**：经典脚本（IIFE + `defer`），ES2017 / Chrome 61 目标；入口 JS/CSS 放在 `static/`；`index.html` 带静态首屏。
+- **旧内核兼容**：`src/platform/polyfills.ts` 补上依赖实际用到的新 API；`scripts/minitool/css-compat.mjs` 在构建后给 flex `gap`、`min()/max()/clamp()`、`dvh`、`env()` 等补回退写法。
+- **存档**：小工具里用容器 Storage（客户端 9.46+），不回退浏览器存储；客户端太旧或读写失败时在界面上提示。
+- **容器能力**：按 `getWindowInfo` 避让右上角胶囊，对局中屏幕常亮，烹饪/过关有振动反馈（设置里可关），结算页可以分享小工具卡片；都会先判断客户端版本和方法是否存在。
+- **字体**：只打包游戏里用到的字。改了界面文案后先运行 `python3 scripts/minitool/subset-font.py <ZCOOLKuaiLe-Regular.ttf>`（需要 `pip install fonttools brotli`），再重新打包。
+
+上传前请在创服平台模拟器里完整玩一遍，再分别用 Android 和 iOS 真机扫码验证同一个包。
+
 ## 玩法
 
 - 3 章 × 3 关 = 9 关，第 3、6、9 关是 Boss。通关后可以继续**无尽模式**（目标每关 ×4）。

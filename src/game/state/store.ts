@@ -6,6 +6,8 @@ import { randomSeed } from '../engine/rng';
 import { big, gt, type Big } from '../scoring/bignum';
 import type { CardInstance, CookResult, RunState, ToolInstance } from '../types';
 import { sfx } from '../../audio/sfx';
+import { gameStorage, onSaveStatus, type SaveStatus } from '../../platform/storage';
+import { setVibrateEnabled, vibrate } from '../../platform/xhs';
 
 type SfxName = Exclude<keyof typeof sfx, 'setEnabled'>;
 
@@ -23,6 +25,8 @@ export interface Settings {
   speed: 1 | 2 | 4;
   sound: boolean;
   tutorialDone: boolean;
+  /** 小工具里的振动反馈；旧存档没有这个字段，按开启处理 */
+  vibrate?: boolean;
 }
 
 export interface Records {
@@ -40,6 +44,8 @@ interface Store {
   toast: { text: string; id: number } | null;
   screen: 'title' | 'game';
   modal: null | 'rules' | 'deck' | 'settings' | 'tutorial';
+  /** 存档状态（不持久化）：小工具里客户端太旧或读写失败时提示玩家 */
+  saveStatus: SaveStatus;
 
   newRun(seed?: string): void;
   continueRun(): void;
@@ -65,6 +71,7 @@ export const useGame = create<Store>()(
       toast: null,
       screen: 'title',
       modal: null,
+      saveStatus: 'ok',
       shop: shopActions,
 
       newRun(seed) {
@@ -98,6 +105,7 @@ export const useGame = create<Store>()(
         } catch (e) {
           if (e instanceof run.GameError || e instanceof Error) get().showToast(e.message);
           sfx.error();
+          vibrate('light');
           return false;
         }
       },
@@ -105,11 +113,12 @@ export const useGame = create<Store>()(
         const s = get().run;
         if (!s || get().anim) return;
         const cards = s.pot.map((u) => run.cardByUid(s, u));
-        const tools = structuredClone(s.tools);
+        const tools = run.clone(s.tools);
         const scoreBefore = s.levelState.score;
         const ok = get().act(run.cook, 'sizzle');
         if (!ok) return;
         const next = get().run!;
+        vibrate('medium');
         set({ anim: { result: next.lastResult!, cards, tools, cursor: -1, done: false, scoreBefore } });
       },
       advanceAnim(cursor) {
@@ -122,6 +131,8 @@ export const useGame = create<Store>()(
         if (s?.phase === 'levelWon') sfx.win();
         if (s?.phase === 'gameOver') sfx.lose();
         if (s?.phase === 'victory') sfx.win();
+        if (s?.phase === 'levelWon' || s?.phase === 'victory') vibrate('heavy');
+        if (s?.phase === 'gameOver') vibrate('long');
       },
       showToast(text) {
         set({ toast: { text, id: Date.now() } });
@@ -132,15 +143,19 @@ export const useGame = create<Store>()(
       updateSettings(p) {
         set((st) => ({ settings: { ...st.settings, ...p } }));
         if (p.sound !== undefined) sfx.setEnabled(p.sound);
+        if (p.vibrate !== undefined) setVibrateEnabled(p.vibrate);
       },
     }),
     {
       name: 'cooking-god:v1',
       version: 1,
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => gameStorage),
       partialize: (st) => ({ run: st.run, settings: st.settings, records: st.records, screen: st.screen }),
       onRehydrateStorage: () => (st) => {
-        if (st) sfx.setEnabled(st.settings.sound);
+        if (st) {
+          sfx.setEnabled(st.settings.sound);
+          setVibrateEnabled(st.settings.vibrate !== false);
+        }
       },
     },
   ),
@@ -168,3 +183,5 @@ function trackRecords(prev: RunState, s: RunState) {
 }
 
 export const runActions = run;
+
+onSaveStatus((saveStatus) => useGame.setState({ saveStatus }));

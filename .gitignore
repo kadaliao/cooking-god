@@ -5,3 +5,5 @@ scripts/art/gen.log
 *.tsbuildinfo
 .DS_Store
 .vercel
+dist-minitool
+minitool-release

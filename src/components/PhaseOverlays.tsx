@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { canShare, shareCard } from '../platform/xhs';
 import { burst } from '../animations/fx';
 import { BOSSES } from '../game/data/bosses';
 import { levelInfo } from '../game/data/levels';
@@ -153,6 +154,35 @@ function Stats({ run }: { run: RunState }) {
   );
 }
 
+/** 分享小工具卡片（小红书客户端 9.53+ 的全屏容器里才显示） */
+function ShareButton() {
+  const [supported, setSupported] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const showToast = useGame((s) => s.showToast);
+  useEffect(() => {
+    let alive = true;
+    void canShare().then((ok) => alive && setSupported(ok));
+    return () => {
+      alive = false;
+    };
+  }, []);
+  if (!supported) return null;
+  return (
+    <button
+      className="btn btn-share"
+      disabled={busy}
+      onClick={async () => {
+        setBusy(true);
+        const err = await shareCard();
+        setBusy(false);
+        if (err) showToast(err);
+      }}
+    >
+      📤 分享给好友
+    </button>
+  );
+}
+
 export function GameOver() {
   const run = useGame((s) => s.run)!;
   const newRun = useGame((s) => s.newRun);
@@ -172,6 +202,7 @@ export function GameOver() {
         <button className="btn" onClick={() => newRun(run.seed)}>
           同种子重开
         </button>
+        <ShareButton />
         <button className="btn btn-ghost" onClick={abandon}>
           回到标题
         </button>
@@ -213,6 +244,7 @@ export function Victory() {
         <button className="btn" onClick={() => newRun()}>
           新的一局
         </button>
+        <ShareButton />
         <button className="btn btn-ghost" onClick={abandon}>
           回到标题
         </button>

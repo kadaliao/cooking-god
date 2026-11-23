@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGame } from '../game/state/store';
+import { canVibrate, IS_MINITOOL } from '../platform/xhs';
 import { Modal } from './Modal';
 
 export function SettingsModal({ onClose }: { onClose: () => void }) {
@@ -10,6 +11,15 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
   const toTitle = useGame((s) => s.toTitle);
   const abandon = useGame((s) => s.abandonRun);
   const [confirm, setConfirm] = useState(false);
+  const [vibrateSupported, setVibrateSupported] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    void canVibrate().then((ok) => alive && setVibrateSupported(ok));
+    return () => {
+      alive = false;
+    };
+  }, []);
+  const vibrateOn = settings.vibrate !== false;
   return (
     <Modal onClose={onClose} className="settings-modal">
       <h2>⚙️ 设置</h2>
@@ -34,6 +44,19 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
           </button>
         </div>
       </div>
+      {vibrateSupported && (
+        <div className="setting-row">
+          <span>振动反馈</span>
+          <div className="seg">
+            <button className={vibrateOn ? 'on' : ''} onClick={() => update({ vibrate: true })}>
+              开
+            </button>
+            <button className={!vibrateOn ? 'on' : ''} onClick={() => update({ vibrate: false })}>
+              关
+            </button>
+          </div>
+        </div>
+      )}
       <div className="setting-row">
         <span>新手教程</span>
         <button
@@ -72,7 +95,9 @@ export function SettingsModal({ onClose }: { onClose: () => void }) {
           )}
         </div>
       )}
-      <div className="muted small">进度会自动保存在本机浏览器里，刷新页面不会丢失。</div>
+      <div className="muted small">
+        {IS_MINITOOL ? '进度会自动保存在小工具里，退出后再打开可以继续。' : '进度会自动保存在本机浏览器里，刷新页面不会丢失。'}
+      </div>
     </Modal>
   );
 }
