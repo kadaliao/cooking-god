@@ -2193,14 +2193,16 @@ html.mt-window {
   --title-r: var(--mt-nav-right);
   --safe-bottom: var(--mt-bottom);
 }
-html.minitool,
-html.minitool body {
+/* 全局禁止选中文字和长按菜单：手机上长按按钮、卡片时不会弹出选区/放大镜 */
+html,
+body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
   touch-action: manipulation;
 }
-html.minitool input {
+input,
+textarea {
   -webkit-user-select: text;
   user-select: text;
 }
