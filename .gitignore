@@ -7,3 +7,8 @@ scripts/art/gen.log
 .vercel
 dist-minitool
 minitool-release
+
+# 宣传视频的中间产物和成片
+promo/build/
+promo/out/
+promo/avatar.jpg

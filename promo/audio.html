@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><title>料理之神 音轨</title></head>
+<body>
+<script src="timeline.js"></script>
+<script>
+// 离线合成整条音轨：配音 + 游戏原版音效（录制时记下的，见 capture.cjs）+ 合成背景音乐 + 转场音效。
+// window.mix({ bgm: true|false }) → base64 的 48k 立体声 16bit WAV
+var SR = 48000;
+
+function noiseBuf(ctx, sec) {
+  var b = ctx.createBuffer(1, Math.floor(SR * sec), SR), d = b.getChannelData(0);
+  for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  return b;
+}
+function mtof(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+function env(g, t, a, peak, d) {
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(peak, t + a);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + a + d);
+}
+
+// ---------------- 乐器
+function kick(ctx, out, t, v) {
+  var o = ctx.createOscillator(), g = ctx.createGain();
+  o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(42, t + 0.14);
+  env(g, t, 0.003, v, 0.32); o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.4);
+}
+function hat(ctx, out, t, v, nb) {
+  var s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+  s.buffer = nb; f.type = 'highpass'; f.frequency.value = 8000;
+  env(g, t, 0.001, v, 0.045); s.connect(f); f.connect(g); g.connect(out); s.start(t, Math.random()); s.stop(t + 0.08);
+}
+function clap(ctx, out, t, v, nb) {
+  var f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 1400; f.Q.value = 0.8; f.connect(out);
+  [0, 0.012, 0.024].forEach(function (o, i) {
+    var s = ctx.createBufferSource(), g = ctx.createGain(); s.buffer = nb;
+    env(g, t + o, 0.001, v * (i === 2 ? 1 : 0.6), i === 2 ? 0.16 : 0.02); s.connect(g); g.connect(f); s.start(t + o, Math.random()); s.stop(t + o + 0.25);
+  });
+}
+function pluck(ctx, out, t, midi, v) {
+  var o = ctx.createOscillator(), o2 = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+  o.type = 'triangle'; o2.type = 'square'; o.frequency.value = mtof(midi); o2.frequency.value = mtof(midi) * 1.002;
+  var g2 = ctx.createGain(); g2.gain.value = 0.18;
+  f.type = 'lowpass'; f.Q.value = 2; f.frequency.setValueAtTime(4200, t); f.frequency.exponentialRampToValueAtTime(600, t + 0.25);
+  env(g, t, 0.004, v, 0.32);
+  o.connect(f); o2.connect(g2); g2.connect(f); f.connect(g); g.connect(out);
+  o.start(t); o2.start(t); o.stop(t + 0.4); o2.stop(t + 0.4);
+}
+function bass(ctx, out, t, midi, v, len) {
+  var o = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+  o.type = 'sawtooth'; o.frequency.value = mtof(midi); f.type = 'lowpass'; f.frequency.value = 320;
+  g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v, t + 0.01); g.gain.setTargetAtTime(0.0001, t + len * 0.7, 0.04);
+  o.connect(f); f.connect(g); g.connect(out); o.start(t); o.stop(t + len + 0.2);
+}
+function pad(ctx, out, t, notes, len, v) {
+  var f = ctx.createBiquadFilter(), g = ctx.createGain();
+  f.type = 'lowpass'; f.frequency.value = 1100; f.Q.value = 0.5;
+  g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v, t + 0.5); g.gain.setValueAtTime(v, t + len - 0.3); g.gain.linearRampToValueAtTime(0.0001, t + len + 0.4);
+  f.connect(g); g.connect(out);
+  notes.forEach(function (m) { [-7, 7].forEach(function (det) {
+    var o = ctx.createOscillator(); o.type = 'sawtooth'; o.frequency.value = mtof(m); o.detune.value = det;
+    o.connect(f); o.start(t); o.stop(t + len + 0.5);
+  }); });
+}
+// ---------------- 音效
+function whoosh(ctx, out, t, v, nb) {
+  var s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+  s.buffer = nb; f.type = 'bandpass'; f.Q.value = 1.2;
+  f.frequency.setValueAtTime(250, t - 0.35); f.frequency.exponentialRampToValueAtTime(3500, t); f.frequency.exponentialRampToValueAtTime(900, t + 0.25);
+  g.gain.setValueAtTime(0.0001, t - 0.35); g.gain.exponentialRampToValueAtTime(v, t - 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+  s.connect(f); f.connect(g); g.connect(out); s.start(Math.max(0, t - 0.36), Math.random()); s.stop(t + 0.35);
+}
+function boom(ctx, out, t, v, nb) {
+  var o = ctx.createOscillator(), g = ctx.createGain();
+  o.frequency.setValueAtTime(90, t); o.frequency.exponentialRampToValueAtTime(38, t + 0.5);
+  env(g, t, 0.005, v, 1.1); o.connect(g); g.connect(out); o.start(t); o.stop(t + 1.3);
+  var s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g2 = ctx.createGain();
+  s.buffer = nb; f.type = 'lowpass'; f.frequency.value = 900; env(g2, t, 0.002, v * 0.5, 0.25);
+  s.connect(f); f.connect(g2); g2.connect(out); s.start(t, Math.random()); s.stop(t + 0.4);
+}
+function pop(ctx, out, t, v, f0) {
+  var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine';
+  o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f0 * 2.1, t + 0.07);
+  env(g, t, 0.002, v, 0.09); o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.15);
+}
+function click(ctx, out, t, v, nb) {
+  var s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+  s.buffer = nb; f.type = 'bandpass'; f.frequency.value = 3200; f.Q.value = 1.5; env(g, t, 0.001, v, 0.025);
+  s.connect(f); f.connect(g); g.connect(out); s.start(t, Math.random()); s.stop(t + 0.05);
+}
+function ding(ctx, out, t, v) {
+  [[1318.5, 1], [1975.5, 0.6], [2637, 0.3]].forEach(function (p) {
+    var o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = p[0];
+    env(g, t, 0.003, v * p[1], 1.2); o.connect(g); g.connect(out); o.start(t); o.stop(t + 1.4);
+  });
+}
+
+// 游戏音效（src/audio/sfx.ts 的 tone / noise），按录制到的参数原样合成。
+// 连锁很长时游戏里的音会升到上万赫兹，视频里折回 2.4kHz 以下，听着不刺耳。
+function fold(f) { while (f > 2400) f /= 2; return f; }
+function gameTone(ctx, out, e, t) {
+  var o = ctx.createOscillator(), g = ctx.createGain();
+  o.type = e.type; var f0 = fold(e.freq);
+  o.frequency.setValueAtTime(f0, t);
+  if (e.slide) o.frequency.exponentialRampToValueAtTime(f0 * e.slide / e.freq, t + e.dur);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(e.vol, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + e.dur);
+  o.connect(g); g.connect(out); o.start(t); o.stop(t + e.dur + 0.02);
+}
+function gameNoise(ctx, out, e, t) {
+  var len = Math.floor(SR * e.dur), buf = ctx.createBuffer(1, len, SR), d = buf.getChannelData(0);
+  for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+  var s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+  s.buffer = buf; f.type = 'bandpass'; f.frequency.value = e.filter; f.Q.value = 0.8; g.gain.value = e.vol;
+  s.connect(f); f.connect(g); g.connect(out); s.start(t);
+}
+// 把镜头里第 f 帧的音效换算到视频时间（按 TL.FOOT 的片段和播放速度）
+async function gameSfx(ctx, out) {
+  var meta = {};
+  for (var k = 0; k < TL.FOOT.length; k++) {
+    var seg = TL.FOOT[k], shot = seg[2];
+    if (!meta[shot]) meta[shot] = await (await fetch('build/shots/' + shot + '/taps.json')).json();
+    var fEnd = seg[3] + (seg[1] - seg[0]) * 30 * seg[4];
+    meta[shot].sfx.forEach(function (e) {
+      if (e.f < seg[3] - 0.5 || e.f >= fEnd) return;
+      var t = seg[0] + (e.f - seg[3]) / (30 * seg[4]);
+      if (e.k === 'tone') gameTone(ctx, out, e, t); else gameNoise(ctx, out, e, t);
+    });
+  }
+}
+
+window.mix = async function (opt) {
+  var END = TL.END;
+  var ctx = new OfflineAudioContext(2, Math.ceil(SR * END), SR);
+  var nb = noiseBuf(ctx, 2);
+  var master = ctx.createDynamicsCompressor();
+  master.threshold.value = -10; master.ratio.value = 3; master.attack.value = 0.005; master.release.value = 0.2;
+  master.connect(ctx.destination);
+
+  // 配音
+  var vo = ctx.createGain(); vo.gain.value = 1; vo.connect(master);
+  for (var i = 0; i < TL.VO.length; i++) {
+    var l = TL.VO[i];
+    var buf = await ctx.decodeAudioData(await (await fetch('build/vo/' + l.f)).arrayBuffer());
+    var s = ctx.createBufferSource(); s.buffer = buf; s.connect(vo); s.start(l.at);
+  }
+
+  // 音效
+  var sfx = ctx.createGain(); sfx.gain.value = 0.55; sfx.connect(master);
+  TL.WHOOSH.forEach(function (t) { whoosh(ctx, sfx, t, 0.5, nb); });
+  TL.BOOM.forEach(function (t) { boom(ctx, sfx, t, 0.9, nb); });
+  var game = ctx.createGain(); game.gain.value = 0.6; game.connect(master);
+  await gameSfx(ctx, game);
+  for (var q = 0; q < 5; q++) pop(ctx, sfx, 0.8 + q * 0.16, 0.22, 420 + q * 70);          // 食材落锅
+  for (var c0 = 0; c0 < 14; c0++) click(ctx, sfx, 0.95 + c0 * 0.068, 0.25, nb);         // 数字滚动
+  pop(ctx, sfx, 4.74, 0.3, 520);                                                       // 吉祥物
+  [12.1, 13.0, 20.65, 21.45, 22.25, 25.9].forEach(function (t) { pop(ctx, sfx, t, 0.25, 620); });
+  for (var h = 0; h < 30; h++) pop(ctx, sfx, 23.15 + h * 0.018 + (h % 4) * 0.02, 0.12, 500 + (h % 5) * 90);
+  for (var h2 = 0; h2 < 23; h2++) pop(ctx, sfx, 23.95 + h2 * 0.018 + (h2 % 4) * 0.02, 0.12, 600 + (h2 % 5) * 90);
+  for (var c = 1; c <= 11; c++) click(ctx, sfx, 30.3 + c * 1.3 / 11 - 0.03, 0.5, nb);
+  ding(ctx, sfx, 31.77, 0.22);
+  for (var w = 0; w < 6; w++) pop(ctx, sfx, 33.4 + w * 0.2, 0.25, 380 + w * 40);
+
+  // 背景音乐：120 BPM，C – Am – F – G
+  if (opt.bgm) {
+    var mus = ctx.createGain(); mus.gain.value = 0.2; mus.connect(master);
+    // 人声出现时让音乐再低一点
+    var duck = ctx.createGain(); duck.connect(mus); duck.gain.setValueAtTime(1, 0);
+    TL.VO.forEach(function (l) {
+      duck.gain.setTargetAtTime(0.55, l.at - 0.05, 0.05);
+      duck.gain.setTargetAtTime(1, l.at + l.dur + 0.05, 0.2);
+    });
+    var CH = [[60, 64, 67, 48], [57, 60, 64, 45], [53, 57, 60, 41], [55, 59, 62, 43]];
+    var ARP = [0, 1, 2, 3, 2, 1, 2, 1];
+    var B = 0.5;
+    var on = function (t) {               // 段落：0=只有铺底，1=半编制，2=全编制，3=停顿
+      if (t < 2.75) return 0; if (t < 6.5) return 1; if (t < 25.0) return 2; if (t < 27.0) return 3; if (t < 35.8) return 2; return 4;
+    };
+    // 前奏铺底 + 上升
+    pad(ctx, duck, 0, [48, 52, 55], 2.75, 0.05);
+    for (var beat = 0; beat * B < END - 0.5; beat++) {
+      var t = beat * B + 0.3;            // 往后挪一点，让鼓点卡在转场上
+      var sec = on(t);
+      var bar = Math.floor(beat / 4), ch = CH[bar % 4];
+      if (beat % 4 === 0 && sec !== 0 && sec !== 4 && t + 2 < END) pad(ctx, duck, t, ch.slice(0, 3).map(function (m) { return m - 12; }), 2, sec === 3 ? 0.05 : 0.035);
+      if (sec === 2) {
+        kick(ctx, duck, t, 0.9);
+        if (beat % 2 === 1) clap(ctx, duck, t, 0.35, nb);
+        hat(ctx, duck, t + B / 2, 0.22, nb);
+        bass(ctx, duck, t, ch[3], 0.5, B / 2); bass(ctx, duck, t + B / 2, ch[3] + 12, 0.35, B / 2);
+      }
+      if (sec === 1 && beat % 2 === 0) kick(ctx, duck, t, 0.5);
+      if (sec === 1 || sec === 2) {
+        for (var e = 0; e < 2; e++) {
+          var idx = ARP[(beat % 4) * 2 + e];
+          var note = idx === 3 ? ch[0] + 12 : ch[idx];
+          pluck(ctx, duck, t + e * B / 2, note + 12, sec === 2 ? 0.28 : 0.22);
+        }
+      }
+    }
+    // 收尾大和弦
+    pad(ctx, duck, 35.8, [48, 52, 55, 60], 0.6, 0.08);
+    kick(ctx, duck, 35.8, 1);
+  }
+
+  var out = await ctx.startRendering();
+  var L = out.getChannelData(0), R = out.getChannelData(1), n = L.length;
+  var wav = new DataView(new ArrayBuffer(44 + n * 4));
+  var ws = function (o, s) { for (var i = 0; i < s.length; i++) wav.setUint8(o + i, s.charCodeAt(i)); };
+  ws(0, 'RIFF'); wav.setUint32(4, 36 + n * 4, true); ws(8, 'WAVE'); ws(12, 'fmt ');
+  wav.setUint32(16, 16, true); wav.setUint16(20, 1, true); wav.setUint16(22, 2, true); wav.setUint32(24, SR, true);
+  wav.setUint32(28, SR * 4, true); wav.setUint16(32, 4, true); wav.setUint16(34, 16, true); ws(36, 'data'); wav.setUint32(40, n * 4, true);
+  for (var k = 0; k < n; k++) {
+    wav.setInt16(44 + k * 4, Math.max(-1, Math.min(1, L[k])) * 32767, true);
+    wav.setInt16(46 + k * 4, Math.max(-1, Math.min(1, R[k])) * 32767, true);
+  }
+  var bytes = new Uint8Array(wav.buffer), bin = '';
+  for (var j = 0; j < bytes.length; j += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(j, j + 0x8000));
+  return btoa(bin);
+};
+</script>
+</body></html>

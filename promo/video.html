@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>料理之神 介绍视频</title>
+<link rel="stylesheet" href="../node_modules/@fontsource/zcool-kuaile/index.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #140b07; }
+body { font-family: -apple-system, "SF Pro Display", "PingFang SC", sans-serif; color: #fff6e8; -webkit-font-smoothing: antialiased; }
+#v { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(120% 80% at 50% 30%, #2a160c 0%, #140b07 60%, #0b0604 100%); }
+.abs { position: absolute; }
+.glow { position: absolute; width: 1700px; height: 1700px; left: -310px; top: 120px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255,140,40,0.42) 0%, rgba(255,80,40,0.16) 38%, rgba(0,0,0,0) 68%); }
+.glow.red { background: radial-gradient(circle, rgba(255,40,60,0.5) 0%, rgba(180,20,60,0.2) 40%, rgba(0,0,0,0) 68%); }
+.center { left: 0; right: 0; text-align: center; }
+.h { font-family: "ZCOOL KuaiLe", "PingFang SC", sans-serif; font-weight: 400; letter-spacing: 2px; white-space: nowrap; text-shadow: 0 6px 0 rgba(0,0,0,0.35); }
+.ch { display: inline-block; will-change: transform, filter, opacity; }
+.g .ch, .g-ch { background: linear-gradient(100deg, #fff0a8 0%, #ffc94a 30%, #ff8a2a 62%, #ff4a5c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; }
+.sub { font-size: 44px; font-weight: 500; color: #c9b8a6; letter-spacing: 2px; }
+
+/* 开场：锅和食材 */
+#wok { position: absolute; left: 150px; top: 980px; width: 780px; }
+.ing { position: absolute; width: 230px; height: 230px; }
+#num { position: absolute; left: 0; right: 0; top: 520px; text-align: center; white-space: nowrap; }
+#num .n { font-family: "ZCOOL KuaiLe", sans-serif; font-size: 200px; letter-spacing: 0; display: inline-block;
+  background: linear-gradient(100deg, #fff0a8 0%, #ffc94a 30%, #ff8a2a 62%, #ff4a5c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+#num .u { font-family: "ZCOOL KuaiLe", sans-serif; font-size: 110px; margin-left: 10px; text-shadow: 0 6px 0 rgba(0,0,0,0.35); }
+#fx { position: absolute; inset: 0; pointer-events: none; }
+
+/* 手机 */
+#phone { position: absolute; width: 540px; height: 1134px; left: 270px; top: 450px; border-radius: 86px; padding: 15px;
+  background: linear-gradient(145deg, #6a5a50 0%, #241c18 30%, #352a24 60%, #7e6c62 100%);
+  box-shadow: 0 60px 140px rgba(0,0,0,0.7), 0 0 120px rgba(255,120,40,0.18), 0 0 0 2px rgba(255,255,255,0.08), inset 0 0 0 2px rgba(255,255,255,0.15); transform-origin: 50% 50%; }
+#screen { position: relative; width: 100%; height: 100%; border-radius: 72px; overflow: hidden; background: #3a2416; }
+#foot { width: 100%; height: 100%; display: block; }
+#island { position: absolute; top: 18px; left: 50%; width: 140px; height: 40px; margin-left: -70px; border-radius: 20px; background: #000; }
+#sbar { position: absolute; top: 20px; left: 54px; font-size: 25px; font-weight: 700; color: #fff; letter-spacing: 0.5px; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+#sbat { position: absolute; top: 25px; right: 46px; width: 44px; height: 21px; border-radius: 6px; border: 2.5px solid rgba(255,255,255,0.9); }
+#sbat::after { content: ''; position: absolute; left: 2px; top: 2px; bottom: 2px; width: 70%; border-radius: 2px; background: #fff; }
+#capsule { position: absolute; left: 384px; top: 67px; width: 114px; height: 42px; border-radius: 21px; background: rgba(255,255,255,0.78); border: 1px solid rgba(0,0,0,0.12);
+  display: flex; align-items: center; justify-content: space-around; padding: 0 14px; }
+#capsule i { display: block; width: 5px; height: 5px; border-radius: 50%; background: #222; margin: 0 2px; }
+#capsule .sep { width: 1px; height: 22px; background: rgba(0,0,0,0.2); margin: 0; border-radius: 0; }
+#capsule .ring { width: 22px; height: 22px; border-radius: 50%; border: 3px solid #222; background: transparent; margin: 0; position: relative; }
+#capsule .ring::after { content: ''; position: absolute; left: 5px; top: 5px; width: 6px; height: 6px; border-radius: 50%; background: #222; }
+#capsule .dots { display: flex; }
+#tap { position: absolute; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; border: 6px solid rgba(255,255,255,0.95); box-shadow: 0 0 24px rgba(255,200,120,0.8); }
+#tapdot { position: absolute; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; background: rgba(255,255,255,0.55); }
+#flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+
+/* 字幕 */
+#cap { position: absolute; left: 60px; right: 60px; top: 1670px; text-align: center; }
+#cap span { display: inline-block; padding: 16px 30px; border-radius: 22px; background: rgba(24,14,8,0.78); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+  font-size: 46px; line-height: 60px; font-weight: 600; color: #fff; letter-spacing: 1px; box-shadow: 0 10px 30px rgba(0,0,0,0.35); max-width: 960px; }
+
+.pill { position: absolute; padding: 18px 34px; border-radius: 40px; font-size: 44px; font-weight: 600; white-space: nowrap;
+  background: rgba(40,24,14,0.9); border: 2px solid rgba(255,210,150,0.35); color: #fff6e8; box-shadow: 0 12px 30px rgba(0,0,0,0.45); }
+.pill b { font-weight: 800; color: #ffc94a; }
+
+/* 流派卡 */
+.route { position: absolute; left: 110px; width: 860px; height: 220px; border-radius: 48px; display: flex; align-items: center; padding: 0 44px;
+  background: linear-gradient(160deg, rgba(80,48,28,0.95), rgba(40,24,14,0.96)); border: 2px solid rgba(255,210,150,0.22); box-shadow: 0 30px 80px rgba(0,0,0,0.55); }
+.route img { width: 150px; height: 150px; margin-right: 6px; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.5)); }
+.route .t { margin-left: 26px; }
+.route .t1 { font-family: "ZCOOL KuaiLe", sans-serif; font-size: 76px; white-space: nowrap; }
+.route .t2 { font-size: 38px; color: #d9c4ad; margin-top: 4px; white-space: nowrap; font-weight: 600; }
+.route .t2 b { color: #ffc94a; }
+.icon { position: absolute; width: 140px; height: 140px; }
+.icon img { width: 100%; height: 100%; display: block; filter: drop-shadow(0 10px 14px rgba(0,0,0,0.55)); }
+.count { position: absolute; top: 720px; width: 540px; text-align: center; }
+.count .k { font-family: "ZCOOL KuaiLe", sans-serif; font-size: 240px; line-height: 1; display: inline-block;
+  background: linear-gradient(100deg, #fff0a8 0%, #ffc94a 30%, #ff8a2a 62%, #ff4a5c 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.count .l { font-family: "ZCOOL KuaiLe", sans-serif; font-size: 72px; margin-top: 10px; }
+
+/* Boss */
+#boss { position: absolute; left: 190px; top: 560px; width: 700px; height: 700px; }
+#bpill { left: 50%; top: 1500px; }
+
+/* 结尾 */
+#search { position: absolute; left: 90px; width: 900px; top: 560px; height: 130px; border-radius: 65px; background: #fff; color: #111;
+  display: flex; align-items: center; padding: 0 44px; font-size: 56px; font-weight: 600; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+#search svg { width: 58px; height: 58px; margin-right: 26px; flex: none; }
+#search .ph { color: #9a9aa0; font-weight: 500; }
+#caret { display: inline-block; width: 4px; height: 60px; background: #ff2442; margin-left: 4px; vertical-align: middle; }
+#search .btn { margin-left: auto; font-size: 46px; color: #ff2442; font-weight: 600; }
+#card { position: absolute; left: 90px; width: 900px; top: 740px; border-radius: 48px; padding: 50px 50px 46px; color: #fff6e8;
+  background: linear-gradient(160deg, rgba(74,48,32,0.94), rgba(34,22,14,0.96)); border: 2px solid rgba(255,210,150,0.16); box-shadow: 0 40px 100px rgba(0,0,0,0.6); }
+#card .row { display: flex; align-items: center; }
+#avatar { width: 150px; height: 150px; border-radius: 50%; flex: none; display: block; object-fit: cover; box-shadow: 0 0 0 5px rgba(255,255,255,0.14); }
+#card .name { font-size: 66px; font-weight: 700; margin-left: 36px; white-space: nowrap; }
+#card .rid { font-size: 38px; color: #c9b8a6; margin-left: 36px; margin-top: 8px; white-space: nowrap; }
+#follow { margin-left: auto; padding: 18px 40px; border-radius: 40px; background: #ff2442; color: #fff; font-size: 40px; font-weight: 700; }
+#tool { margin-top: 42px; padding: 28px; border-radius: 32px; background: rgba(255,255,255,0.07); display: flex; align-items: center; }
+#tool img { width: 120px; height: 120px; border-radius: 28px; }
+#tool .t1 { font-size: 50px; font-weight: 700; margin-left: 30px; white-space: nowrap; }
+#tool .t2 { font-size: 34px; color: #c9b8a6; margin-left: 30px; margin-top: 6px; white-space: nowrap; }
+#go { margin-left: auto; padding: 18px 30px; border-radius: 36px; font-size: 38px; font-weight: 700; color: #2a1206; white-space: nowrap; background: linear-gradient(100deg, #ffe07a, #ffab3d 50%, #ff6a3d); }
+.bob { position: absolute; width: 130px; height: 130px; }
+</style>
+</head>
+<body>
+<div id="v">
+  <div class="glow" id="glow"></div>
+  <div class="glow red" id="glowR"></div>
+
+  <!-- 场景 1：一盘小炒两百万分 -->
+  <img id="wok" src="../public/art/scene/wok.webp" alt="">
+  <div id="ings"></div>
+  <div class="abs center h" id="s1a" style="top:330px;font-size:104px">一盘家常小炒，</div>
+  <div id="num"><span class="n" id="numv">0</span><span class="u" id="numu">分？</span></div>
+
+  <!-- 场景 2：标题 -->
+  <div class="abs center h" id="s2a" style="top:860px;font-size:100px">我做了个<span class="g">小游戏</span>！</div>
+  <div class="abs center sub" id="s2lab" style="top:300px">小红书小工具</div>
+  <img class="abs" id="mascot" src="../public/art/scene/mascot.webp" style="left:260px;top:380px;width:560px;height:560px" alt="">
+  <div class="abs center h" id="s2title" style="top:980px;font-size:220px;letter-spacing:10px"><span class="g">料理之神</span></div>
+  <div class="abs center sub" id="s2en" style="top:1250px;font-size:40px;letter-spacing:22px;color:#e8b36a;font-weight:700">COOKING GOD</div>
+  <div class="abs center sub" id="s2sub" style="top:1340px;font-size:52px;color:#f0e2d0">点开就能玩 · 不用下载</div>
+
+  <!-- 手机（场景 3–5 共用） -->
+  <div id="phone"><div id="screen"><img id="foot" alt=""><div id="island"></div><div id="sbar">9:41</div><div id="sbat"></div>
+    <div id="capsule"><div class="dots"><i></i><i></i><i></i></div><i class="sep"></i><i class="ring"></i></div>
+    <div id="tapdot"></div><div id="tap"></div><div id="flash"></div></div></div>
+
+  <div class="abs" id="topfade" style="left:0;right:0;top:0;height:560px;background:linear-gradient(#140b07 0%, rgba(20,11,7,0.88) 55%, rgba(20,11,7,0) 100%);opacity:0"></div>
+  <div class="abs center h" id="s3h" style="top:170px;font-size:110px">挑 <span class="g">5</span> 张，下锅。</div>
+  <div class="abs center sub" id="s3s" style="top:320px">点一下，食材飞进锅里</div>
+  <div class="abs center h" id="s4h" style="top:170px;font-size:110px">顺序，<span class="g">有讲究</span>。</div>
+  <div class="abs center sub" id="s4s" style="top:320px">大蒜打头 → <b style="color:#ffc94a">炝锅 +3 倍率</b></div>
+  <div class="abs center h" id="s5h" style="top:150px;font-size:110px">厨具，<span class="g">连锁乘算</span>！</div>
+  <div class="pill" id="p5a" style="left:40px;top:640px">祖传铁锅 <b>每张肉 ×2</b></div>
+  <div class="pill" id="p5b" style="right:40px;top:760px">黄金锅铲 <b>重来 2 次</b></div>
+  <div class="abs center h" id="s6h" style="top:120px;font-size:150px;letter-spacing:0"><span class="g">+2,606,912</span></div>
+  <div class="abs center h" id="s7h" style="top:170px;font-size:110px">过关，<span class="g">逛商店</span>。</div>
+  <div class="abs center sub" id="s7s" style="top:320px">买厨具 · 升配方 · 稀有食材</div>
+
+  <!-- 场景 6：流派 + 数量 -->
+  <div class="abs center h" id="s8h" style="top:300px;font-size:104px">攒你的<span class="g">流派</span>。</div>
+  <div class="route" id="r1" style="top:560px"><img src="../public/art/tools/heirloomWok.webp"><img src="../public/art/tools/grill.webp"><div class="t"><div class="t1">肉类翻倍</div><div class="t2">每张肉 <b>×2</b></div></div></div>
+  <div class="route" id="r2" style="top:820px"><img src="../public/art/tools/hellOil.webp"><img src="../public/art/tools/malaChain.webp"><div class="t"><div class="t1">辣味连锁</div><div class="t2">每张辣 <b>×3</b></div></div></div>
+  <div class="route" id="r3" style="top:1080px"><img src="../public/art/tools/centuryBroth.webp"><img src="../public/art/tools/pickleJar.webp"><div class="t"><div class="t1">永久成长</div><div class="t2">越做<b>越强</b></div></div></div>
+  <div class="count" id="k1" style="left:0"><div class="k" id="k1v">30</div><div class="l">种食材</div></div>
+  <div class="count" id="k2" style="left:540px"><div class="k" id="k2v">23</div><div class="l">件厨具</div></div>
+  <div id="icons"></div>
+
+  <!-- 场景 7：Boss -->
+  <div class="abs center h" id="s9a" style="top:300px;font-size:110px"><span class="g">9</span> 关打完，</div>
+  <img id="boss" src="../public/art/bosses/foodGod.webp" alt="">
+  <div class="abs center h" id="s9b" style="top:1290px;font-size:130px">挑战<span class="g">终极食神</span>！</div>
+  <div class="pill" id="bpill">目标 <b>1,200,000</b> 分</div>
+
+  <!-- 场景 8 -->
+  <div class="abs center h" id="s10a" style="top:620px;font-size:150px">不用买菜。</div>
+  <div class="abs center h" id="s10b" style="top:830px;font-size:150px">不用洗锅。</div>
+  <div class="abs center h" id="s10c" style="top:1040px;font-size:130px"><span class="g">摸鱼也能炒一锅。</span></div>
+
+  <!-- 场景 9：结尾 -->
+  <div class="abs center sub" id="s11lab" style="top:440px;font-size:50px;color:#f0e2d0">打开小红书，搜索</div>
+  <div id="search"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span id="typed"></span><span id="caret"></span><span class="ph" id="ph">搜索小红书号</span><span class="btn">搜索</span></div>
+  <div id="card">
+    <div class="row"><img id="avatar" src="avatar.jpg" alt=""><div><div class="name">Kada玩AI</div><div class="rid">小红书号：KadaPlaysAI</div></div><div id="follow">关注</div></div>
+    <div id="tool"><img src="../minitool/store/icon.png" alt=""><div><div class="t1">料理之神</div><div class="t2">我的小工具</div></div><div id="go">去开锅 →</div></div>
+  </div>
+  <div class="abs center h" id="s11h" style="top:1300px;font-size:116px">一起当<span class="g">料理之神</span>！</div>
+  <div id="bobs"></div>
+
+  <canvas id="fx" width="1080" height="1920"></canvas>
+  <div id="cap"><span id="capt"></span></div>
+</div>
+
+<script src="timeline.js"></script>
+<script>
+var $ = function (id) { return document.getElementById(id); };
+function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+function seg(t, a, b) { return clamp((t - a) / (b - a), 0, 1); }
+function eo(x) { return x >= 1 ? 1 : 1 - Math.pow(2, -10 * x); }
+function eio(x) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+function ei(x) { return x * x * x; }
+function spring(x) { if (x <= 0) return 0; if (x >= 1) return 1; return 1 - Math.exp(-6.5 * x) * Math.cos(11 * x); }
+function lerp(a, b, f) { return a + (b - a) * f; }
+function css(el, o) { for (var k in o) el.style[k] = o[k]; }
+function show(el, on) { el.style.display = on ? '' : 'none'; }
+function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+// 逐字拆分（渐变字按整词宽度对齐背景）
+function split(el) {
+  var chars = [];
+  (function walk(node) {
+    Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+      if (n.nodeType === 3) {
+        var frag = document.createDocumentFragment();
+        Array.from(n.textContent).forEach(function (c) {
+          var s = document.createElement('span'); s.className = 'ch'; s.textContent = c === ' ' ? ' ' : c;
+          frag.appendChild(s); chars.push(s);
+        });
+        n.parentNode.replaceChild(frag, n);
+      } else if (n.nodeType === 1) walk(n);
+    });
+  })(el);
+  el._chars = chars;
+}
+function fixGradients() {
+  document.querySelectorAll('.g').forEach(function (g) {
+    var disp = [], p = g; while (p && p !== document.body) { if (p.style && p.style.display === 'none') { disp.push(p); p.style.display = ''; } p = p.parentNode; }
+    var cs = g.querySelectorAll('.ch'), r = g.getBoundingClientRect();
+    cs.forEach(function (c) { c.style.backgroundSize = r.width + 'px 100%'; c.style.backgroundPosition = (r.left - c.getBoundingClientRect().left) + 'px 0'; });
+    disp.forEach(function (d) { d.style.display = 'none'; });
+  });
+}
+function reveal(el, t, tin, tout, opt) {
+  opt = opt || {};
+  var st = opt.stagger || 0.035, d = opt.dur || 0.55, dy = opt.dy == null ? 50 : opt.dy;
+  var outF = tout == null ? 0 : eio(seg(t, tout, tout + (opt.outDur || 0.28)));
+  var vis = t >= tin - 0.01 && outF < 1;
+  el.style.display = vis ? '' : 'none';
+  if (!vis) return;
+  el._chars.forEach(function (c, i) {
+    var f = eo(seg(t, tin + i * st, tin + i * st + d));
+    c.style.opacity = f;
+    c.style.transform = 'translateY(' + ((1 - f) * dy) + 'px) scale(' + lerp(opt.s0 || 1, 1, f) + ')';
+    c.style.filter = f > 0.99 ? 'none' : 'blur(' + ((1 - f) * 14) + 'px)';
+  });
+  el.style.opacity = 1 - outF;
+  el.style.filter = outF > 0 ? 'blur(' + outF * 16 + 'px)' : 'none';
+  el.style.transform = 'translateY(' + (-outF * 40) + 'px) scale(' + (1 - outF * 0.04) + ')';
+}
+// 弹出的元素：spring 进、模糊出
+function pop(el, t, tin, tout, base) {
+  var f = spring(seg(t, tin, tin + 0.7)), o = tout == null ? 0 : eio(seg(t, tout, tout + 0.3));
+  show(el, t >= tin && o < 1);
+  css(el, { opacity: Math.min(1, f * 2) * (1 - o), transform: (base || '') + ' scale(' + (lerp(0.3, 1, f) * (1 - o * 0.2)) + ')', filter: o > 0 ? 'blur(' + o * 14 + 'px)' : 'none' });
+}
+
+// ---------- 粒子（按时间解析计算，逐帧可复现）
+var BURSTS = [
+  { t: 1.9, x: 540, y: 640, n: 90, power: 1500, seed: 3 },
+  { t: 4.78, x: 540, y: 1100, n: 70, power: 1300, seed: 5 },
+  { t: 14.95, x: 540, y: 230, n: 80, power: 1300, seed: 7 },
+  { t: 25.2, x: 540, y: 900, n: 60, power: 1200, seed: 11, red: true },
+  { t: 33.0, x: 540, y: 1360, n: 70, power: 1300, seed: 13 }
+];
+BURSTS.forEach(function (b) {
+  var r = rng(b.seed), cols = b.red ? ['#ff3d5a', '#ffb13d', '#ffffff', '#ff7a2a'] : ['#ffd23f', '#ff8a2a', '#ff4a5c', '#ffffff', '#ffe9a8'];
+  b.ps = [];
+  for (var i = 0; i < b.n; i++) {
+    var a = r() * Math.PI * 2, sp = (0.35 + r() * 0.65) * b.power;
+    b.ps.push({ vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - b.power * 0.35, s: 8 + r() * 16, c: cols[i % cols.length], life: 0.9 + r() * 0.7, rot: r() * 6, star: r() < 0.45 });
+  }
+});
+var fx = $('fx').getContext('2d');
+function star(c, x, y, r) { c.beginPath(); for (var i = 0; i < 10; i++) { var a = i * Math.PI / 5 - Math.PI / 2, rr = i % 2 ? r * 0.45 : r; c.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); } c.closePath(); c.fill(); }
+function drawFx(t) {
+  fx.clearRect(0, 0, 1080, 1920);
+  BURSTS.forEach(function (b) {
+    var dt = t - b.t;
+    if (dt < 0 || dt > 1.8) return;
+    b.ps.forEach(function (p) {
+      if (dt > p.life) return;
+      var drag = (1 - Math.exp(-2.2 * dt)) / 2.2;
+      var x = b.x + p.vx * drag, y = b.y + p.vy * drag + 900 * dt * dt;
+      fx.globalAlpha = 1 - dt / p.life;
+      fx.fillStyle = p.c;
+      if (p.star) star(fx, x, y, p.s); else { fx.beginPath(); fx.arc(x, y, p.s * 0.55, 0, 7); fx.fill(); }
+    });
+  });
+  fx.globalAlpha = 1;
+}
+
+// ---------- 初始化
+['s1a', 's2a', 's2title', 's3h', 's3s', 's4h', 's4s', 's5h', 's6h', 's7h', 's7s', 's8h', 's9a', 's9b', 's10a', 's10b', 's10c', 's11h'].forEach(function (id) { split($(id)); });
+
+var INGS = ['garlic', 'beef', 'pork', 'chicken', 'cabbage'];
+var ings = INGS.map(function (id, i) {
+  var im = document.createElement('img'); im.className = 'ing'; im.src = '../public/art/ingredients/' + id + '.webp'; $('ings').appendChild(im);
+  return { el: im, at: 0.25 + i * 0.16, x: 160 + i * 170, side: i % 2 ? 1 : -1 };
+});
+
+var ALL_ING = ['beef', 'cabbage', 'caviar', 'chicken', 'chili', 'crab', 'cucumber', 'egg', 'eggplant', 'enoki', 'fish', 'flour', 'garlic', 'ginger', 'greenpepper', 'lamb', 'mushbroth', 'mystery', 'noodles', 'pork', 'potato', 'redbroth', 'rice', 'shiitake', 'shrimp', 'sichuanpepper', 'squid', 'tomato', 'truffle', 'woodear'];
+var ALL_TOOL = ['autoWok', 'board', 'centuryBroth', 'darkCookbook', 'fridge', 'goldenSpatula', 'grill', 'heirloomWok', 'hellOil', 'knife', 'ladle', 'luckyCat', 'malaChain', 'michelin', 'mitts', 'molecular', 'msg', 'pickleJar', 'prepStation', 'steamer', 'timer', 'twiceCooked', 'wokToss'];
+// 食材排在上方 3×10，厨具排在下方 3×8，中间留给两个大数字
+var icons = [];
+(function () {
+  var r = rng(42);
+  function place(list, dir, cols, x0, dx, ys) {
+    list.forEach(function (id, i) {
+      var d = document.createElement('div'); d.className = 'icon';
+      d.innerHTML = '<img src="../public/art/' + dir + '/' + id + '.webp">';
+      $('icons').appendChild(d);
+      var row = Math.floor(i / cols), col = i % cols;
+      var x = x0 + col * dx + (row % 2 ? dx / 2 : 0) + (r() - 0.5) * 18;
+      var y = ys[row] + (r() - 0.5) * 24;
+      icons.push({ el: d, x: x, y: y, delay: (row * cols + col) * 0.018 + r() * 0.08, ph: r() * 6, sc: 0.68 + r() * 0.12 });
+    });
+  }
+  place(ALL_ING, 'ingredients', 10, 70, 104, [400, 505, 610]);
+  place(ALL_TOOL, 'tools', 8, 95, 125, [1150, 1265, 1380]);
+})();
+
+var bobs = ['garlic', 'beef', 'chili', 'shrimp', 'egg', 'cabbage'].map(function (id) {
+  var im = document.createElement('img'); im.className = 'bob'; im.src = '../public/art/ingredients/' + id + '.webp'; $('bobs').appendChild(im); return im;
+});
+
+// ---------- 手机机位
+var PH = { cx: 540, cy: 1017, W: 510, H: 1104 };
+var K = 510 / 390;   // 录屏坐标 → 手机屏幕像素
+function phoneCam(s, u, v, tx, ty, extra) {
+  var px = (u - 0.5) * PH.W, py = (v - 0.5) * PH.H;
+  return 'translate(' + (tx - PH.cx - s * px) + 'px,' + (ty - PH.cy - s * py) + 'px) ' + (extra || '') + ' scale(' + s + ')';
+}
+var META = {};
+function footAt(t) {
+  for (var i = 0; i < TL.FOOT.length; i++) {
+    var f = TL.FOOT[i];
+    if (t >= f[0] && t < f[1]) {
+      var fr = f[3] + (t - f[0]) * 30 * f[4];
+      var n = Math.min(META[f[2]].frames, Math.floor(fr + 1e-6));
+      return { shot: f[2], fr: fr, src: 'build/shots/' + f[2] + '/f' + String(n).padStart(5, '0') + '.jpg' };
+    }
+  }
+  return null;
+}
+
+var footSrc = '';
+window.render = async function (t) {
+  // 背景光
+  var red = seg(t, 25.0, 25.3) * (1 - seg(t, 26.8, 27.1));
+  css($('glow'), { opacity: (t < 2.0 ? 0.35 + 0.65 * seg(t, 1.7, 2.1) : 1) * (1 - red), transform: 'translate(' + Math.sin(t * 0.4) * 60 + 'px,' + Math.cos(t * 0.3) * 50 + 'px)' });
+  css($('glowR'), { opacity: red });
+
+  // 场景 1
+  reveal($('s1a'), t, 0.3, 2.55);
+  var s1o = eio(seg(t, 2.55, 2.85));
+  ings.forEach(function (g, i) {
+    var f = seg(t, g.at, g.at + 0.55);
+    show(g.el, t >= g.at && f < 1);
+    var x = lerp(g.x, 425 + (i - 2) * 30, ei(f)), y = lerp(-260, 1060, f * f);
+    css(g.el, { left: x + 'px', top: y + 'px', transform: 'rotate(' + (g.side * (1 - f) * 40 + f * g.side * 200) + 'deg) scale(' + lerp(1, 0.6, f) + ')' });
+  });
+  var wf = spring(seg(t, 0.05, 0.75));
+  var hit = 0; ings.forEach(function (g) { var d = t - (g.at + 0.55); if (d > 0 && d < 0.18) hit = Math.max(hit, 1 - d / 0.18); });
+  var thump = t > 1.9 && t < 2.3 ? (1 - (t - 1.9) / 0.4) : 0;
+  show($('wok'), t < 2.85);
+  css($('wok'), { opacity: Math.min(1, wf * 2) * (1 - s1o), transform: 'translateY(' + ((1 - wf) * 300 + hit * 14 + s1o * 200) + 'px) scale(' + (1 + thump * 0.05) + ')', filter: s1o > 0 ? 'blur(' + s1o * 14 + 'px)' : 'none' });
+  var nf = seg(t, 0.95, 1.9);
+  show($('num'), t >= 0.95 && s1o < 1);
+  $('numv').textContent = fmt(Math.round(2606912 * (1 - Math.pow(1 - nf, 3))));
+  css($('num'), { opacity: Math.min(1, nf * 4) * (1 - s1o), transform: 'scale(' + (lerp(0.7, 1, eo(nf)) + thump * 0.12) + ') translateY(' + (-s1o * 40) + 'px)', filter: s1o > 0 ? 'blur(' + s1o * 16 + 'px)' : 'none' });
+  $('numu').style.opacity = seg(t, 1.85, 2.0);
+
+  // 场景 2
+  reveal($('s2a'), t, 2.85, 4.55, { s0: 0.9 });
+  var lo = eio(seg(t, 6.2, 6.55));
+  var mf = spring(seg(t, 4.72, 5.6));
+  show($('mascot'), t >= 4.72 && t < 6.55);
+  css($('mascot'), { opacity: Math.min(1, mf * 2) * (1 - lo), transform: 'translateY(' + ((1 - mf) * 200 - lo * 120 + Math.sin(t * 3) * 10) + 'px) scale(' + lerp(0.4, 1, mf) * (1 + lo * 0.3) + ') rotate(' + (1 - mf) * -12 + 'deg)', filter: 'blur(' + lo * 18 + 'px)' });
+  reveal($('s2title'), t, 4.78, 6.2, { stagger: 0.09, dur: 0.7, dy: 80, s0: 1.5 });
+  show($('s2lab'), t >= 4.9 && t < 6.55);
+  css($('s2lab'), { opacity: eo(seg(t, 4.9, 5.4)) * (1 - lo), letterSpacing: lerp(26, 8, eo(seg(t, 4.9, 5.8))) + 'px' });
+  show($('s2en'), t >= 5.1 && t < 6.55);
+  css($('s2en'), { opacity: eo(seg(t, 5.1, 5.6)) * (1 - lo) });
+  show($('s2sub'), t >= 5.3 && t < 6.55);
+  css($('s2sub'), { opacity: eo(seg(t, 5.3, 5.8)) * (1 - lo), transform: 'translateY(' + (1 - eo(seg(t, 5.3, 5.9))) * 30 + 'px)' });
+
+  // 手机
+  var phOn = t >= 6.5 && t < 20.75;
+  show($('phone'), phOn);
+  var z = 0;
+  if (phOn) {
+    var enter = eo(seg(t, 6.5, 7.35));
+    var exit = ei(seg(t, 20.35, 20.72));
+    // 结算时推近到锅和厨具
+    z = eio(seg(t, 10.75, 11.35)) * (1 - eio(seg(t, 16.35, 16.85)));
+    var s = lerp(1, 1.3, z), v = lerp(0.5, 0.42, z), ty = lerp(PH.cy, 1000, z);
+    var tilt = 'perspective(2400px) rotateX(' + ((1 - enter) * 28) + 'deg)';
+    css($('phone'), {
+      transform: 'translateY(' + ((1 - enter) * 900 + exit * 1300) + 'px) ' + phoneCam(s * lerp(0.86, 1, enter), 0.5, v, PH.cx, ty, tilt),
+      opacity: Math.min(1, enter * 1.5) * (1 - exit)
+    });
+    var ft = footAt(t);
+    if (ft && ft.src !== footSrc) { footSrc = ft.src; $('foot').src = ft.src; await $('foot').decode().catch(function () {}); }
+    // 点击提示
+    var tapF = -1, tap = null;
+    if (ft) META[ft.shot].taps.forEach(function (tp) { var d = ft.fr - tp.f; if (d >= -1 && d < 14) { tap = tp; tapF = (d + 1) / 15; } });
+    show($('tap'), !!tap); show($('tapdot'), !!tap);
+    if (tap) {
+      css($('tap'), { left: tap.x * K + 'px', top: tap.y * K + 'px', transform: 'scale(' + lerp(0.4, 1.3, eo(tapF)) + ')', opacity: 1 - tapF });
+      css($('tapdot'), { left: tap.x * K + 'px', top: tap.y * K + 'px', transform: 'scale(' + (tapF < 0.3 ? 1 : 1 - (tapF - 0.3)) + ')', opacity: 1 - tapF });
+    }
+    var flv = 0;
+    [10.6, 17.35].forEach(function (c) { if (t >= c && t < c + 0.22) flv = (1 - (t - c) / 0.22) * 0.5; });
+    $('flash').style.opacity = flv;
+  }
+  $('topfade').style.opacity = phOn ? 0.5 + z * 0.45 : 0;
+
+  // 场景 3–5 标题
+  reveal($('s3h'), t, 6.75, 8.25);
+  reveal($('s3s'), t, 7.2, 8.25, { stagger: 0.02 });
+  reveal($('s4h'), t, 8.35, 10.55);
+  reveal($('s4s'), t, 8.85, 10.55, { stagger: 0.02 });
+  reveal($('s5h'), t, 10.75, 14.75);
+  pop($('p5a'), t, 12.1, 14.7);
+  pop($('p5b'), t, 13.0, 14.7);
+  reveal($('s6h'), t, 14.92, 17.2, { s0: 1.4, stagger: 0.04, dur: 0.45 });
+  reveal($('s7h'), t, 17.45, 20.3);
+  reveal($('s7s'), t, 17.9, 20.3, { stagger: 0.02 });
+
+  // 场景 6：流派
+  reveal($('s8h'), t, 20.6, 22.95);
+  [['r1', 20.65], ['r2', 21.45], ['r3', 22.25]].forEach(function (r, i) {
+    var el = $(r[0]), f = spring(seg(t, r[1], r[1] + 0.7)), o = eio(seg(t, 22.95 + i * 0.05, 23.3 + i * 0.05));
+    show(el, t >= r[1] && o < 1);
+    css(el, { opacity: Math.min(1, f * 2) * (1 - o), transform: 'translateX(' + ((1 - f) * (i % 2 ? 300 : -300)) + 'px) translateY(' + (-o * 80) + 'px) scale(' + (1 - o * 0.1) + ')', filter: o > 0 ? 'blur(' + o * 14 + 'px)' : 'none' });
+  });
+  var kOut = eio(seg(t, 24.85, 25.1));
+  [['k1', 'k1v', 30, 23.15], ['k2', 'k2v', 23, 23.95]].forEach(function (k) {
+    var f = spring(seg(t, k[3], k[3] + 0.7));
+    show($(k[0]), t >= k[3] && kOut < 1);
+    css($(k[0]), { opacity: Math.min(1, f * 2) * (1 - kOut), transform: 'scale(' + lerp(0.4, 1, f) + ')', filter: kOut > 0 ? 'blur(' + kOut * 14 + 'px)' : 'none' });
+    $(k[1]).textContent = Math.round(lerp(1, k[2], eio(seg(t, k[3], k[3] + 0.6))));
+  });
+  var icOn = t >= 23.1 && kOut < 1;
+  show($('icons'), icOn);
+  if (icOn) icons.forEach(function (h, i) {
+    var start = (i < ALL_ING.length ? 23.15 : 23.95) + h.delay;
+    var f = spring(seg(t, start, start + 0.7));
+    css(h.el, { left: (h.x - 70) + 'px', top: (h.y - 70 + Math.sin(t * 2.2 + h.ph) * 10 + (1 - Math.min(1, f)) * 60) + 'px', opacity: Math.min(1, f * 3) * (1 - kOut),
+      transform: 'scale(' + (h.sc * lerp(0.2, 1, f)) + ') rotate(' + Math.sin(t * 1.4 + h.ph) * 8 + 'deg)' });
+  });
+
+  // 场景 7：Boss
+  reveal($('s9a'), t, 25.05, 26.8, { s0: 1.2 });
+  var bf = spring(seg(t, 25.15, 26.0)), bo = eio(seg(t, 26.8, 27.05));
+  show($('boss'), t >= 25.15 && bo < 1);
+  css($('boss'), { opacity: Math.min(1, bf * 2) * (1 - bo), transform: 'translateY(' + ((1 - bf) * 200 + Math.sin(t * 2.5) * 12) + 'px) scale(' + lerp(0.5, 1, bf) * (1 + bo * 0.2) + ')', filter: 'drop-shadow(0 0 60px rgba(255,60,60,0.55))' + (bo > 0 ? ' blur(' + bo * 16 + 'px)' : '') });
+  reveal($('s9b'), t, 25.55, 26.8, { s0: 1.3, stagger: 0.05 });
+  var bp = spring(seg(t, 25.9, 26.5));
+  show($('bpill'), t >= 25.9 && bo < 1);
+  css($('bpill'), { opacity: Math.min(1, bp * 2) * (1 - bo), transform: 'translateX(-50%) scale(' + lerp(0.4, 1, bp) + ')' });
+
+  // 场景 8
+  reveal($('s10a'), t, 27.05, 29.55, { s0: 1.25, stagger: 0.03, dur: 0.45 });
+  reveal($('s10b'), t, 27.75, 29.55, { s0: 1.25, stagger: 0.03, dur: 0.45 });
+  reveal($('s10c'), t, 28.45, 29.55, { s0: 1.25, stagger: 0.03, dur: 0.45 });
+  var dim = function (el, at) { if (t > at && el.style.display !== 'none') el.style.opacity = Math.min(+el.style.opacity || 1, 1 - 0.55 * eo(seg(t, at, at + 0.3))); };
+  dim($('s10a'), 27.75); dim($('s10b'), 28.45); dim($('s10a'), 28.45);
+
+  // 场景 9
+  var on11 = t >= 29.75;
+  var sIn = eo(seg(t, 29.8, 30.4));
+  show($('s11lab'), on11); css($('s11lab'), { opacity: sIn, transform: 'translateY(' + (1 - sIn) * 30 + 'px)' });
+  show($('search'), on11);
+  css($('search'), { opacity: sIn, transform: 'translateY(' + (1 - sIn) * 80 + 'px) scale(' + lerp(0.9, 1, sIn) + ')' });
+  var ID = 'KadaPlaysAI';
+  var typedN = Math.floor(clamp((t - 30.3) / 1.3, 0, 1) * ID.length + 0.0001);
+  $('typed').textContent = ID.slice(0, typedN);
+  show($('ph'), typedN === 0);
+  $('caret').style.opacity = (t < 32.2 ? (Math.floor(t * 3) % 2 === 0 || (t > 30.3 && t < 31.6)) : false) ? 1 : 0;
+  var cIn = spring(seg(t, 31.75, 32.6));
+  show($('card'), t >= 31.75);
+  css($('card'), { opacity: Math.min(1, cIn * 2), transform: 'translateY(' + (1 - cIn) * 160 + 'px) scale(' + lerp(0.92, 1, cIn) + ')' });
+  var pulse = t > 33.2 ? 1 + 0.06 * Math.max(0, Math.sin((t - 33.2) * Math.PI * 2)) : 1;
+  $('go').style.transform = 'scale(' + pulse + ')';
+  $('go').style.boxShadow = t > 33.2 ? '0 0 ' + (30 + 30 * Math.max(0, Math.sin((t - 33.2) * Math.PI * 2))) + 'px rgba(255,150,60,0.6)' : 'none';
+  reveal($('s11h'), t, 32.95, null, { s0: 1.3, stagger: 0.06, dur: 0.6 });
+  bobs.forEach(function (b, i) {
+    var at = 33.4 + i * 0.2, f = spring(seg(t, at, at + 0.5));
+    show(b, t >= at);
+    css(b, { left: (85 + i * 160) + 'px', top: (1500 + Math.sin(t * 4 + i) * 14) + 'px', opacity: Math.min(1, f * 2), transform: 'rotate(' + Math.sin(t * 3 + i * 2) * 10 + 'deg) scale(' + f + ')' });
+  });
+
+  drawFx(t);
+
+  // 字幕
+  var cap = null, capF = 0;
+  TL.VO.forEach(function (l, idx) {
+    var next = TL.VO[idx + 1];
+    var end = Math.min(l.at + l.dur + 0.35, next ? next.at - 0.05 : 99);
+    if (l.cap && t >= l.at - 0.08 && t < end) { cap = l.cap; capF = eo(seg(t, l.at - 0.08, l.at + 0.15)) * (1 - seg(t, end - 0.12, end)); }
+  });
+  show($('cap'), !!cap);
+  if (cap) {
+    if ($('capt').textContent !== cap) $('capt').textContent = cap;
+    css($('cap'), { opacity: capF, transform: 'translateY(' + (1 - capF) * 16 + 'px)' });
+  }
+};
+
+window.ready = (async function () {
+  for (var shot of ['pick', 'cook', 'shop']) META[shot] = await (await fetch('build/shots/' + shot + '/taps.json')).json();
+  // 站酷快乐体按字分包加载：把会出现的字都请求一遍
+  var txt = document.body.innerText + '0123456789,+×？！。，' + TL.VO.map(function (l) { return l.cap || ''; }).join('');
+  await document.fonts.load('100px "ZCOOL KuaiLe"', txt);
+  await document.fonts.ready;
+  await Promise.all(Array.from(document.images).map(function (im) { return im.decode().catch(function () {}); }));
+  fixGradients();
+  return true;
+})();
+</script>
+</body>
+</html>
